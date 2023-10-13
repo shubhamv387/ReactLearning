@@ -37,8 +37,8 @@ const collegeReducer = (state, action) => {
 const Login = (props) => {
   // const [enteredEmail, setEnteredEmail] = useState("");
   // const [emailIsValid, setEmailIsValid] = useState();
-  const [enteredCollege, setEnteredCollege] = useState("");
-  const [collegeIsValid, setCollegeIsValid] = useState();
+  // const [enteredCollege, setEnteredCollege] = useState("");
+  // const [collegeIsValid, setCollegeIsValid] = useState();
   // const [enteredPassword, setEnteredPassword] = useState("");
   // const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
@@ -124,7 +124,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value, enteredCollege);
+    props.onLogin(emailState.value, passwordState.value, collegeState.value);
   };
 
   return (
