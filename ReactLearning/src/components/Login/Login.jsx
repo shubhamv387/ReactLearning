@@ -64,12 +64,12 @@ const Login = (props) => {
 
   useEffect(() => {
     const identifier = setTimeout(() => {
-      console.log("Check form validity!");
+      // console.log("Check form validity!");
       setFormIsValid(emailIsValid && passwordIsValid && collegeIsValid);
     }, 500);
 
     return () => {
-      console.log("CLEANUP");
+      // console.log("CLEANUP");
       clearTimeout(identifier);
     };
   }, [emailIsValid, passwordIsValid, collegeIsValid]);
