@@ -1,9 +1,105 @@
+import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
+  const [formData, setFormData] = useState({
+    productId: "",
+    sellingPrice: "",
+    productName: "",
+  });
+
+  const [productList, setProductList] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const data = [];
+    let totalPrice1 = 0;
+
+    for (let i = 1; i <= localStorage.length; i++) {
+      let product = JSON.parse(localStorage[i]);
+
+      data.push(product);
+
+      totalPrice1 += +product.sellingPrice;
+    }
+
+    setTotalPrice(totalPrice + totalPrice1);
+
+    setProductList([...data]);
+  }, []);
+
+  const inputHandler = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    localStorage.setItem(formData.productId, JSON.stringify(formData));
+
+    setProductList((prevState) => [...prevState, formData]);
+    setTotalPrice(totalPrice + +formData.sellingPrice);
+
+    setFormData({
+      productId: "",
+      sellingPrice: "",
+      productName: "",
+    });
+  };
+
+  const deleteProduct = (id) => {
+    const product = JSON.parse(localStorage.getItem(id));
+    setTotalPrice(totalPrice - product.sellingPrice);
+    localStorage.removeItem(id);
+    setProductList((prevState) => prevState.filter((p) => p.productId != id));
+  };
+
   return (
     <div>
-      <h1>Hello World!</h1>
+      <form onSubmit={submitHandler}>
+        <label htmlFor="productId">Product ID</label>
+        <input
+          onChange={inputHandler}
+          value={formData.productId}
+          type="number"
+          id="productId"
+          name="productId"
+        />
+
+        <label htmlFor="sellingPrice">Selling Price</label>
+        <input
+          onChange={inputHandler}
+          value={formData.sellingPrice}
+          type="number"
+          id="sellingPrice"
+          name="sellingPrice"
+        />
+
+        <label htmlFor="productName">Product Name</label>
+        <input
+          onChange={inputHandler}
+          value={formData.productName}
+          type="text"
+          id="productName"
+          name="productName"
+        />
+        <button type="submit">Add Product</button>
+      </form>
+
+      <ul>
+        {productList.map((product) => (
+          <li key={product.productId}>
+            {product.sellingPrice} - {product.productName}{" "}
+            <button
+              onClick={() => deleteProduct(product.productId)}
+              type="button"
+            >
+              Delete Product
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      <h1>Total Price: {totalPrice}</h1>
     </div>
   );
 }
