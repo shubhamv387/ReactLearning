@@ -11,10 +11,7 @@ function App() {
   return (
     <>
       <MainHeader />
-      <main>
-        {!ctx.isLoggedIn && <Login />}
-        {ctx.isLoggedIn && <Home />}
-      </main>
+      <main>{ctx.isLoggedIn ? <Home /> : <Login />}</main>
     </>
   );
 }

@@ -1,9 +1,14 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  useContext,
+} from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
-import { useContext } from "react";
 import AuthContext from "../../context/auth-context";
 import Input from "../UI/Input/Input";
 
@@ -37,7 +42,7 @@ const collegeReducer = (state, action) => {
   return { value: "", isValid: false };
 };
 
-const Login = (props) => {
+const Login = () => {
   // const [enteredEmail, setEnteredEmail] = useState("");
   // const [emailIsValid, setEmailIsValid] = useState();
   // const [enteredCollege, setEnteredCollege] = useState("");
