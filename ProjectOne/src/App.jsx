@@ -12,15 +12,16 @@ function App() {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
+    const storage = Object.values(localStorage);
     const data = [];
     let totalPrice1 = 0;
 
-    for (let i = 1; i <= localStorage.length; i++) {
-      let product = JSON.parse(localStorage[i]);
+    for (let i = 0; i < storage.length; i++) {
+      let product = JSON.parse(storage[i]);
 
       data.push(product);
 
-      totalPrice1 += +product.sellingPrice;
+      totalPrice1 += parseFloat(product.sellingPrice);
     }
 
     setTotalPrice(totalPrice + totalPrice1);
@@ -37,7 +38,7 @@ function App() {
     localStorage.setItem(formData.productId, JSON.stringify(formData));
 
     setProductList((prevState) => [...prevState, formData]);
-    setTotalPrice(totalPrice + +formData.sellingPrice);
+    setTotalPrice(totalPrice + parseFloat(formData.sellingPrice));
 
     setFormData({
       productId: "",
@@ -48,7 +49,7 @@ function App() {
 
   const deleteProduct = (id) => {
     const product = JSON.parse(localStorage.getItem(id));
-    setTotalPrice(totalPrice - product.sellingPrice);
+    setTotalPrice(totalPrice - parseFloat(product.sellingPrice));
     localStorage.removeItem(id);
     setProductList((prevState) => prevState.filter((p) => p.productId != id));
   };
@@ -58,6 +59,7 @@ function App() {
       <form onSubmit={submitHandler}>
         <label htmlFor="productId">Product ID</label>
         <input
+          required
           onChange={inputHandler}
           value={formData.productId}
           type="number"
@@ -67,6 +69,7 @@ function App() {
 
         <label htmlFor="sellingPrice">Selling Price</label>
         <input
+          required
           onChange={inputHandler}
           value={formData.sellingPrice}
           type="number"
@@ -76,6 +79,7 @@ function App() {
 
         <label htmlFor="productName">Product Name</label>
         <input
+          required
           onChange={inputHandler}
           value={formData.productName}
           type="text"
@@ -99,7 +103,7 @@ function App() {
         ))}
       </ul>
 
-      <h1>Total Price: {totalPrice}</h1>
+      <h1>Total Price: {totalPrice <= 0 ? 0 : totalPrice.toFixed(2)}</h1>
     </div>
   );
 }
