@@ -1,0 +1,8 @@
+ul {
+  padding-inline-start: 15px;
+}
+
+li,
+input {
+  margin: 5px;
+}

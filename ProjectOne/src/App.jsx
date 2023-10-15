@@ -30,7 +30,7 @@ function App() {
   }, []);
 
   const inputHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
 
   const submitHandler = (e) => {
@@ -55,7 +55,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="app">
       <form onSubmit={submitHandler}>
         <label htmlFor="productId">Product ID</label>
         <input
@@ -92,7 +92,8 @@ function App() {
       <ul>
         {productList.map((product) => (
           <li key={product.productId}>
-            {product.sellingPrice} - {product.productName}{" "}
+            {parseFloat(product.sellingPrice).toFixed(2)} -{" "}
+            {product.productName}{" "}
             <button
               onClick={() => deleteProduct(product.productId)}
               type="button"
