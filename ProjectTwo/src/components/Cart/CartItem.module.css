@@ -13,10 +13,15 @@
 }
 
 .summary {
-  width: 10rem;
+  width: 20rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.qtyDiv {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .price {

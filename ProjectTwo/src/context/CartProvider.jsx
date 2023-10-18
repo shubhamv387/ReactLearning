@@ -1,16 +1,13 @@
 import React, { useReducer } from "react";
 import CartContext from "./cart-context";
 
-const initialCartState = { items: [], totalAmount: 0 };
+const initialCartState = {
+  items: [],
+  totalAmount: 0,
+};
 
 const cartReducer = (state, action) => {
   if (action.type === "ADD") {
-    let qty;
-
-    if (action.item.qty === "largeQty") qty = largeQty;
-    else if (action.item.qty === "mediumQty") qty = mediumQty;
-    else if (action.item.qty === "smallQty") qty = smallQty;
-
     const updatedTotalAmount = state.totalAmount + action.item.price;
 
     const existingCartItemIndex = state.items.findIndex(
@@ -24,8 +21,11 @@ const cartReducer = (state, action) => {
     if (existingCartItem) {
       const updatedItem = {
         ...existingCartItem,
-        amount: existingCartItem.amount + action.item.amount,
+        largeQty: existingCartItem.largeQty + action.item.largeQty,
+        mediumQty: existingCartItem.mediumQty + action.item.mediumQty,
+        smallQty: existingCartItem.smallQty + action.item.smallQty,
       };
+
       updatedItems = [...state.items];
       updatedItems[existingCartItemIndex] = updatedItem;
     } else {
@@ -35,32 +35,7 @@ const cartReducer = (state, action) => {
     return { items: updatedItems, totalAmount: updatedTotalAmount };
   }
 
-  if (action.type === "REMOVE") {
-    const existingCartItemIndex = state.items.findIndex(
-      (item) => item.id === action.id
-    );
-
-    const existingCartItem = state.items[existingCartItemIndex];
-
-    const updatedTotalAmount = state.totalAmount - existingCartItem.price;
-
-    let updatedItems;
-
-    if (existingCartItem.amount === 1) {
-      updatedItems = state.items.filter((item) => item.id !== action.id);
-    } else {
-      const updatedItem = {
-        ...existingCartItem,
-        amount: +existingCartItem.amount - 1,
-      };
-      updatedItems = [...state.items];
-      updatedItems[existingCartItemIndex] = updatedItem;
-    }
-
-    return { items: updatedItems, totalAmount: updatedTotalAmount };
-  }
-
-  if (action.type === "REMOVE") {
+  if (action.type === "ORDER") {
     return initialCartState;
   }
 
@@ -74,13 +49,12 @@ const CartProvider = (props) => {
   );
 
   const addItemToCartHandler = (item) => {
-    console.log(item);
-    // dispatchCartAction({ type: "ADD", item: item });
+    dispatchCartAction({ type: "ADD", item: item });
   };
 
-  const removeItemFromCartHandler = (id) => {
-    dispatchCartAction({ type: "REMOVE", id: id });
-  };
+  // const removeItemFromCartHandler = (id) => {
+  //   dispatchCartAction({ type: "REMOVE", id: id });
+  // };
 
   const orderHandler = () => {
     dispatchCartAction({ type: "ORDER" });
@@ -90,7 +64,7 @@ const CartProvider = (props) => {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
-    removeItem: removeItemFromCartHandler,
+    // removeItem: removeItemFromCartHandler,
     order: orderHandler,
   };
 

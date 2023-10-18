@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import classes from "./ShoeItem.module.css";
-import ShoeItemForm from "./ShoeItemForm";
 import CartContext from "../../../context/cart-context";
 import ShoeContext from "../../../context/shoe-context";
 
@@ -10,42 +9,47 @@ const ShoeItem = (props) => {
   const cartCtx = useContext(CartContext);
   const shoeCtx = useContext(ShoeContext);
 
-  console.log(props);
-
-  const addToCartHandler = (amount) => {
-    cartCtx.addItem({
-      name: props.name,
-      id: props.id,
-      amount: amount,
-      price: props.price,
-    });
-  };
-
   const largeBuyHandler = () => {
+    if (props.largeQty <= 0) return alert("Large Size - Out of stock");
+
     cartCtx.addItem({
       name: props.name,
       id: props.id,
-      qty: "largeQty",
+      largeQty: 1,
+      mediumQty: 0,
+      smallQty: 0,
       price: props.price,
     });
+
+    shoeCtx.buyShoe("largeQty", props.id);
   };
 
   const mediumBuyHandler = () => {
+    if (props.mediumQty <= 0) return alert("Medium Size - Out of stock");
+
     cartCtx.addItem({
       name: props.name,
       id: props.id,
-      qty: "mediumQty",
+      largeQty: 0,
+      mediumQty: 1,
+      smallQty: 0,
       price: props.price,
     });
+    shoeCtx.buyShoe("mediumQty", props.id);
   };
 
   const smallBuyHandler = () => {
+    if (props.smallQty <= 0) return alert("Small Size - Out of stock");
+
     cartCtx.addItem({
       name: props.name,
       id: props.id,
-      qty: "smallQty",
+      largeQty: 0,
+      mediumQty: 0,
+      smallQty: 1,
       price: props.price,
     });
+    shoeCtx.buyShoe("smallQty", props.id);
   };
 
   return (
@@ -63,12 +67,6 @@ const ShoeItem = (props) => {
         </button>
         <button onClick={smallBuyHandler}>Buy Small ({props.smallQty})</button>
       </div>
-
-      {/* <ShoeItemForm onAddToCart={addToCartHandler} />
-
-      <ShoeItemForm onAddToCart={addToCartHandler} />
-
-      <ShoeItemForm onAddToCart={addToCartHandler} /> */}
     </li>
   );
 };
