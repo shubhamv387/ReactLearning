@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import classes from "./ShoeItem.module.css";
 import CartContext from "../../../context/cart-context";
 import ShoeContext from "../../../context/shoe-context";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ShoeItem = (props) => {

@@ -54,3 +54,10 @@
   background-color: #641e03;
   border-color: #641e03;
 }
+
+@media (max-width: 768px) {
+  .add-new-shoe .form input {
+    width: 100%;
+    max-width: 100%;
+  }
+}
