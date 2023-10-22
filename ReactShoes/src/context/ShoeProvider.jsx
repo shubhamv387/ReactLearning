@@ -8,8 +8,8 @@ const initialShoeState = {
       name: "Gucci",
       description: "Gucci shoes",
       price: 120,
-      largeQty: 10,
-      mediumQty: 5,
+      largeQty: 5,
+      mediumQty: 3,
       smallQty: 2,
     },
     {
@@ -20,15 +20,6 @@ const initialShoeState = {
       largeQty: 100,
       mediumQty: 250,
       smallQty: 50,
-    },
-    {
-      id: 3,
-      name: "Sparx",
-      description: "Sparx shoes",
-      price: 10,
-      largeQty: 3,
-      mediumQty: 2,
-      smallQty: 1,
     },
   ],
 };

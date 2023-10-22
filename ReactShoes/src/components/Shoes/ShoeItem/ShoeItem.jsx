@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import classes from "./ShoeItem.module.css";
 import CartContext from "../../../context/cart-context";
 import ShoeContext from "../../../context/shoe-context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ShoeItem = (props) => {
   const price = `$${props.price.toFixed(2)}`;
@@ -10,7 +12,7 @@ const ShoeItem = (props) => {
   const shoeCtx = useContext(ShoeContext);
 
   const largeBuyHandler = () => {
-    if (props.largeQty <= 0) return alert("Large Size - Out of stock");
+    if (props.largeQty <= 0) return toast.warn("Large Size - Out of stock");
 
     cartCtx.addItem({
       name: props.name,
@@ -25,7 +27,7 @@ const ShoeItem = (props) => {
   };
 
   const mediumBuyHandler = () => {
-    if (props.mediumQty <= 0) return alert("Medium Size - Out of stock");
+    if (props.mediumQty <= 0) return toast.warn("Medium Size - Out of stock");
 
     cartCtx.addItem({
       name: props.name,
@@ -39,7 +41,7 @@ const ShoeItem = (props) => {
   };
 
   const smallBuyHandler = () => {
-    if (props.smallQty <= 0) return alert("Small Size - Out of stock");
+    if (props.smallQty <= 0) return toast.warn("Small Size - Out of stock");
 
     cartCtx.addItem({
       name: props.name,

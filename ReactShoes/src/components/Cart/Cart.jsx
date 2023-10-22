@@ -3,6 +3,7 @@ import classes from "./Cart.module.css";
 import Model from "../UI/Model";
 import CartContext from "../../context/cart-context";
 import CartItem from "./CartItem";
+import { Bounce, Zoom, toast } from "react-toastify";
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
@@ -31,7 +32,11 @@ const Cart = (props) => {
 
   const orderBtnHandler = () => {
     cartCtx.order();
-    alert("Your order has been placed. Enjoy!");
+    toast.success("Your order has been placed. Enjoy!", {
+      position: "top-center",
+      autoClose: 5000,
+      transition: Bounce,
+    });
     props.onHideCart();
   };
 
