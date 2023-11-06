@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -9,7 +9,7 @@ function App() {
   const [error, setError] = useState(null);
   const [retrying, setRetrying] = useState(false);
 
-  const fetchMoviesHandler = async () => {
+  const fetchMoviesHandler = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -17,8 +17,7 @@ function App() {
       const response = await fetch('https://swapi.dev/api/films');
 
       if (!response.ok) {
-        setRetrying(true);
-        throw new Error('Something went wrong! ....Retrying');
+        throw new Error('Something went wrong!');
       }
 
       const data = await response.json();
@@ -34,10 +33,15 @@ function App() {
       setIsLoading(false);
     } catch (error) {
       setError(error.message);
+      setRetrying(true);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchMoviesHandler();
+  }, [fetchMoviesHandler]);
 
   useEffect(() => {
     let timeoutId;
@@ -45,7 +49,7 @@ function App() {
     if (retrying)
       timeoutId = setTimeout(() => {
         fetchMoviesHandler();
-      }, 5000);
+      }, 3000);
 
     return () => clearTimeout(timeoutId);
   }, [retrying]);
@@ -62,7 +66,7 @@ function App() {
       </p>
     );
 
-  if (error && !retrying) content = <p>Something went wrong!</p>;
+  if (error && !retrying) content = <p>{error}</p>;
 
   if (isLoading) content = <p>Loading Movies...</p>;
 
