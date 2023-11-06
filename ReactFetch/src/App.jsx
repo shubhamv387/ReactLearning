@@ -45,6 +45,17 @@ function App() {
     fetchMoviesHandler();
   }, [fetchMoviesHandler]);
 
+  useEffect(() => {
+    let timeoutId;
+
+    if (retrying)
+      timeoutId = setTimeout(() => {
+        fetchMoviesHandler();
+      }, 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [retrying]);
+
   async function addMovieHandler(movie) {
     try {
       const response = await fetch(
@@ -65,20 +76,30 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    let timeoutId;
+  async function deleteMovieHandler(id) {
+    try {
+      const response = await fetch(
+        `https://react-http-4c3ab-default-rtdb.firebaseio.com/movies/${id}`,
+        {
+          method: 'DELETE',
+          mode: 'cors',
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      );
 
-    if (retrying)
-      timeoutId = setTimeout(() => {
-        fetchMoviesHandler();
-      }, 3000);
-
-    return () => clearTimeout(timeoutId);
-  }, [retrying]);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   let content = <p>No Movies Found!</p>;
 
-  if (movies.length > 0) content = <MoviesList movies={movies} />;
+  if (movies.length > 0)
+    content = <MoviesList movies={movies} onDeleteMovie={deleteMovieHandler} />;
 
   if (error)
     content = (
