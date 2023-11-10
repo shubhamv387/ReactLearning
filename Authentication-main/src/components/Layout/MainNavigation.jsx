@@ -24,7 +24,7 @@ const MainNavigation = () => {
                 <Link to='/profile'>Profile</Link>
               </li>
               <li>
-                <button>Logout</button>
+                <button onClick={authCtx.logout}>Logout</button>
               </li>
             </>
           )}
