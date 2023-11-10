@@ -41,10 +41,8 @@ const ProfileForm = () => {
       }
 
       alert('Password changed successfully!');
-      console.log(data);
     } catch (error) {
       alert(error.message);
-      console.log(error.message);
     }
   };
 
