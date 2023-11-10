@@ -1,9 +1,12 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import classes from './AuthForm.module.css';
+import authContext from '../../store/auth-context';
 
 const AuthForm = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+
+  const authCtx = useContext(authContext);
 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,26 +22,31 @@ const AuthForm = () => {
     const enteredPassword = passwordInputRef.current.value;
 
     setIsLoading(true);
+
+    let url;
+
     if (isLogin) {
-      //
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${
+        import.meta.env.VITE_FIREBASE_API_KEY
+      }`;
     } else {
-      const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${
-          import.meta.env.VITE_FIREBASE_API_KEY
-        }
-      `,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            email: enteredEmail,
-            password: enteredPassword,
-            returnSecureToken: true,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${
+        import.meta.env.VITE_FIREBASE_API_KEY
+      }`;
+    }
+
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       const data = await res.json();
       setIsLoading(false);
@@ -48,8 +56,14 @@ const AuthForm = () => {
         if (data && data.error && data.error.message)
           errorMessage = data.error.message;
 
-        alert(errorMessage);
+        throw new Error(errorMessage);
       }
+
+      authCtx.login(data.idToken);
+      // console.log(data);
+    } catch (error) {
+      alert(error.message);
+      console.log(error.message);
     }
   };
 
