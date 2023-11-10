@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import classes from './MainNavigation.module.css';
 import { useContext } from 'react';
 import authContext from '../../store/auth-context';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 const MainNavigation = () => {
   const authCtx = useContext(authContext);

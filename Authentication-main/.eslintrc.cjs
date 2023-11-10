@@ -13,8 +13,15 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': [
-      'warn',
+      'off',
       { allowConstantExport: true },
     ],
+
+    'no-unused-vars': [
+      'warn',
+      { vars: 'all', args: 'none', ignoreRestSiblings: false },
+    ],
+    'react-hooks/exhaustive-deps': 'off',
+    'react/prop-types': [0],
   },
 };

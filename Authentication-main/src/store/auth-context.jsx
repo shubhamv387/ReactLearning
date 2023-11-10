@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 const authContext = React.createContext({
   token: '',
   isLoggedIn: false,
-  // eslint-disable-next-line no-unused-vars
   login: (token) => {},
   logout: () => {},
 });
@@ -35,7 +34,6 @@ export const AuthContextProvider = (props) => {
         tokenExpireHandler();
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loginHandler = (token) => {
@@ -59,11 +57,9 @@ export const AuthContextProvider = (props) => {
 
   return (
     <authContext.Provider value={contextValue}>
-      {/* eslint-disable-next-line react/prop-types */}
       {props.children}
     </authContext.Provider>
   );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export default authContext;
