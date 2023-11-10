@@ -82,10 +82,6 @@ function App() {
         `https://react-http-4c3ab-default-rtdb.firebaseio.com/movies/${id}`,
         {
           method: 'DELETE',
-          mode: 'cors',
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
         }
       );
 
