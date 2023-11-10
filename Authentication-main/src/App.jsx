@@ -1,6 +1,5 @@
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
-
-import { Switch, Route } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
 import UserProfile from './components/Profile/UserProfile';
@@ -11,15 +10,9 @@ function App() {
   return (
     <Layout>
       <Switch>
-        <Route path='/' exact>
-          <HomePage />
-        </Route>
-        <Route path='/auth'>
-          <AuthPage />
-        </Route>
-        <Route path='/profile'>
-          <UserProfile />
-        </Route>
+        <Route exact path='/' component={HomePage} />
+        <Route exact path='/profile' component={UserProfile} />
+        <Route exact path='/auth' component={AuthPage} />
       </Switch>
     </Layout>
   );

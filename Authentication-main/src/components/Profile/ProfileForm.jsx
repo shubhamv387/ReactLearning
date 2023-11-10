@@ -12,6 +12,6 @@ const ProfileForm = () => {
       </div>
     </form>
   );
-}
+};
 
 export default ProfileForm;
