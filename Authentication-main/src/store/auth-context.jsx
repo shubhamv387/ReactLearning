@@ -16,7 +16,7 @@ export const AuthContextProvider = (props) => {
 
   const userIsLoggedIn = !!token;
 
-  const timer = 1 * 60 * 1000;
+  const timer = 5 * 60 * 1000;
 
   const tokenExpireHandler = () => {
     localStorage.removeItem('token');
