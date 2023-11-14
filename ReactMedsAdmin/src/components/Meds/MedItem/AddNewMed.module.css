@@ -1,0 +1,63 @@
+.add-new-med {
+  text-align: center;
+  max-width: 60rem;
+  width: 90%;
+  margin: auto;
+  margin-top: -10rem;
+  position: relative;
+  color: #383838;
+  border-radius: 14px;
+}
+
+.add-new-med h2 {
+  font-size: 2rem;
+  margin-top: 0;
+}
+
+.add-new-med form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.add-new-med form div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-new-med form h3 {
+  width: 85%;
+  align-self: flex-start;
+  margin: 0;
+  padding: 0.8rem;
+  background: #8a2b06;
+  color: white;
+}
+
+.add-new-med .form button {
+  cursor: pointer;
+  font-size: 1.2rem;
+  background-color: #8a2b06;
+  border: 1px solid #8a2b06;
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 20px;
+  font-weight: bold;
+  align-self: flex-start;
+}
+
+.add-new-med .form button:hover,
+.add-new-med .form button:active {
+  background-color: #641e03;
+  border-color: #641e03;
+}
+
+@media (max-width: 768px) {
+  .add-new-med .form input {
+    width: 100%;
+    max-width: 100%;
+  }
+}
