@@ -12,32 +12,38 @@ const Counter = () => {
       <h1>Redux Counter</h1>
       <div className={classes.value}>{counter}</div>
       <div>
-        <button onClick={() => dispatch({ type: 'increment' })} type='button'>
+        <button
+          onClick={() => dispatch({ type: 'increment', payload: 1 })}
+          type='button'
+        >
           INCREMENT
         </button>
-        <button onClick={() => dispatch({ type: 'decrement' })} type='button'>
+        <button
+          onClick={() => dispatch({ type: 'decrement', payload: 1 })}
+          type='button'
+        >
           DECREMENT
         </button>
         <button
-          onClick={() => dispatch({ type: 'incrementBy2' })}
+          onClick={() => dispatch({ type: 'increment', payload: 2 })}
           type='button'
         >
           INCREMENT BY 2
         </button>
         <button
-          onClick={() => dispatch({ type: 'decrementBy2' })}
+          onClick={() => dispatch({ type: 'decrement', payload: 2 })}
           type='button'
         >
           DECREMENT BY 2
         </button>
         <button
-          onClick={() => dispatch({ type: 'incrementBy5' })}
+          onClick={() => dispatch({ type: 'increment', payload: 5 })}
           type='button'
         >
           INCREMENT BY 5
         </button>
         <button
-          onClick={() => dispatch({ type: 'decrementBy5' })}
+          onClick={() => dispatch({ type: 'decrement', payload: 5 })}
           type='button'
         >
           DECREMENT BY 5
