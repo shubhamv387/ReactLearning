@@ -11,6 +11,12 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState: initialCartState,
   reducers: {
+    replaceCart(state, action) {
+      state.cartItems = action.payload.cartItems;
+      state.totalQty = action.payload.totalQty;
+      state.totalAmount = action.payload.totalAmount;
+    },
+
     addToCart(state, action) {
       state.totalAmount = state.totalAmount + +action.payload.price;
       state.totalQty = state.totalQty + action.payload.qty;
@@ -27,9 +33,10 @@ const cartSlice = createSlice({
           qty: existingItem.qty + 1,
           total: existingItem.total + +existingItem.price,
         };
+
         state.cartItems[existingItemIndex] = updatedItem;
       } else {
-        state.cartItems = state.cartItems.concat({
+        state.cartItems.push({
           ...action.payload,
           total: +action.payload.price,
         });
@@ -59,7 +66,6 @@ const cartSlice = createSlice({
         );
       }
     },
-    order(state, action) {},
   },
 });
 
@@ -103,6 +109,42 @@ export const sendCartData = (cart) => {
           status: 'error',
           title: 'Error!',
           message: 'Sending cart data failed!',
+        })
+      );
+    }
+  };
+};
+
+export const fetchCartData = () => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await fetch(
+        'https://react-http-4c3ab-default-rtdb.firebaseio.com/cart.json'
+      );
+
+      if (!response.ok) throw new Error('Could not fetch cart data!');
+
+      const data = await response.json();
+      return data;
+    };
+
+    try {
+      const cartData = await fetchData();
+
+      dispatch(
+        CartActions.replaceCart({
+          cartItems: cartData?.cartItems || [],
+          totalQty: cartData?.totalQty || 0,
+          totalAmount: cartData?.totalAmount || 0,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+      dispatch(
+        uiActions.showNotification({
+          status: 'error',
+          title: 'Error!',
+          message: 'Fetching cart data failed!',
         })
       );
     }
